@@ -1,0 +1,8 @@
+node_modules/
+.env
+config/config.json
+config/keys.js
+
+
+.idea/
+.DS_Store
