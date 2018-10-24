@@ -6,3 +6,4 @@ config/keys.js
 
 .idea/
 .DS_Store
+.idea/vcs.xml
