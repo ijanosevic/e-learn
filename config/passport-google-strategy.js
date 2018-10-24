@@ -12,8 +12,6 @@ passport.use(
         clientSecret: keys.google.clientSecret
     }, (accessToken, refreshToken, profileInformation, done) => {
 
-        console.log('odgovor sa google-a, informacije o profilu');
-        console.log(profileInformation.id);
         db.User
             .findOne({
                 where: {
@@ -22,38 +20,24 @@ passport.use(
             })
             .then(user => {
                 if (user) {
-                    console.log('korisnik je pronadjen');
-                    console.log(user);
+                    done(null, user);
                 } else {
-                    console.log('nema korisnika u bazi, kreiraj novog');
-                    console.log(user);
+                    const new_user = {
+                        first_name: profileInformation.name.givenName,
+                        last_name: profileInformation.name.familyName,
+                        email: profileInformation.emails[0].value,
+                        id_google: profileInformation.id
+                    };
+                    db.User.create(new_user)
+                        .then(createdUser => {
+                            console.log('kreirani korisnik');
+                            done(null, createdUser);
+                        });
                 }
             })
             .catch(err => {
                 console.log('greska pri trazenju korisnika, aka nije pronadjen');
                 console.log(err);
-            })
-        // User
-        //     .findOne({googleId: profileInformation.id})
-        //     .then((currentUser) => {
-        //         if (currentUser) {
-        //             // already have the user
-        //             console.log('user found!');
-        //             // console.log(currentUser);
-        //             done(null, currentUser);
-        //         } else {
-        //             // create user in db
-        //             new User({
-        //                 username: profileInformation.displayName,
-        //                 googleId: profileInformation.id,
-        //                 email: profileInformation.emails[0].value
-        //             })
-        //             .save()
-        //             .then((newUser) => {
-        //                 console.log('user created!');
-        //                 done(null, newUser);
-        //             });
-        //         }
-        //     });
+            });
     })
 );

@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         salt: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         wakatime_api_key: {
             type: DataTypes.STRING,
@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 0
         },
+        id_google: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
         is_active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -57,11 +61,3 @@ module.exports = (sequelize, DataTypes) => {
 
     return User;
 };
-
-/*
-* ,
-        google_id: {
-            type: DataTypes.INTEGER,
-            allowNull: true
-        }
-* */
