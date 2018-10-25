@@ -1,24 +1,22 @@
 const passport = require('passport');
 const router = require('express').Router();
 const util = require('../util');
-const User = require('../models/user.js');
+const db = require('../models/index');
 
 passport.serializeUser((user, done) => {
-    // done(null, user.id);
-    console.log('serializeUser');
-    done(null, 1);
+    done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    // User.findById(id)
-    //     .then((err, foundUser) => {
-    //         if (err) {
-    //             console.log(err);
-    //         }
-    //         done(null, foundUser);
-    //     })
-    console.log('deserializeUser');
-    done(null, 2);
+    db.User
+        .findByPk(id)
+        .then((user) => {
+            if (user) {
+                return done(null, user);
+            } else {
+                return done(null, false);
+            }
+        });
 });
 
 // auth login

@@ -12,7 +12,7 @@ module.exports = {
 
     return queryInterface
       .addColumn(
-        'Users',
+        'users',
         'is_admin',
         {
           type: Sequelize.BOOLEAN,
@@ -32,7 +32,7 @@ module.exports = {
     */
     return queryInterface
     .removeColumn(
-      'Users',
+      'users',
       'is_admin'
     )
   }

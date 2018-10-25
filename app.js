@@ -22,7 +22,6 @@ app.use(cookieSession({
     keys: [keys.session.cookieKey]
 }));
 app.use(cookieParser());
-
 app.use(passport.initialize());
 
 // routes
